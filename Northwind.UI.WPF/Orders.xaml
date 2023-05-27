@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="Northwind.UI.WPF.Orders"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModel="clr-namespace:Northwind.ViewModel;assembly=Northwind.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance viewModel:OrdersViewModel}">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}" x:Key="RightAlign">
+            <Setter Property="TextAlignment" Value="Right" />
+        </Style>
+        <Style TargetType="{x:Type TextBlock}" x:Key="LeftAlign">
+            <Setter Property="TextAlignment" Value="Left" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Model.OrderId}"
+                                    ElementStyle="{StaticResource LeftAlign}" />
+                <DataGridTextColumn Header="Order Date" Binding="{Binding Model.OrderDate, StringFormat=d}"
+                                    ElementStyle="{StaticResource LeftAlign}" />
+                <DataGridTextColumn Header="Shipped Date" Binding="{Binding Model.ShippedDate, StringFormat=d}"
+                                    ElementStyle="{StaticResource LeftAlign}" />
+                <DataGridTextColumn Header="Total" Binding="{Binding Total, StringFormat=c}"
+                                    ElementStyle="{StaticResource RightAlign}" />
+                <DataGridTemplateColumn Header="Details">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock> 
+                                <Hyperlink 
+                                    Command="{Binding ShowOrderDetailsCommand}"> 
+                                    <TextBlock 
+                                        Text="Show Details" /> 
+                                </Hyperlink> 
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
